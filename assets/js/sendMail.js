@@ -14,6 +14,6 @@ function sendMail(e) {
     From: email.value,
     Cc: ccValue ? email.value : undefined,
     Subject: `[NEW CONTACT - ${name.value} ] ` + subject.value,
-    Body: msg.value,
+    Body: msg.value + ' ~Sent via Ashkenazzio Portfolio Form~',
   }).then((message) => alert(message));
 }
