@@ -1,7 +1,6 @@
 const form = document.getElementById('contact-form');
 
 function sendMail(e) {
-  e.preventDefault();
   const name = document.getElementById('name');
   const email = document.getElementById('email');
   const subject = document.getElementById('subject');
@@ -10,7 +9,7 @@ function sendMail(e) {
   const ccValue = $(cc).prop('checked');
 
   Email.send({
-    SecureToken: '3cb4de1c-2285-4668-9a3f-61401f303e17',
+    SecureToken: '85c5a24f-3659-46e1-b176-eb8131cd702d',
     To: 'ashkenazzio@gmail.com',
     From: email.value,
     Cc: ccValue ? email.value : undefined,
@@ -18,5 +17,3 @@ function sendMail(e) {
     Body: msg.value,
   }).then((message) => alert(message));
 }
-
-form.addEventListener('submit', sendMail);
