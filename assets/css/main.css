@@ -4104,6 +4104,7 @@ body.is-preload #header.alt .logo {
   display: inline-block;
   padding: 0.65em;
   border: solid 1px;
+  cursor: pointer;
 }
 
 .project > .button {

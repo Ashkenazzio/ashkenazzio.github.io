@@ -1,32 +1,40 @@
 const closeModal = document.querySelectorAll('.modal__close');
 const backdrops = document.querySelectorAll('.backdrop');
 
-const openArise = document.querySelector('#openArise');
+const openArise = document.querySelectorAll('.openArise');
 const arise = document.querySelector('#arise');
 
-const openWeather = document.querySelector('#openWeather');
+const openWeather = document.querySelectorAll('.openWeather');
 const weather = document.querySelector('#weather');
 
-const openSpace = document.querySelector('#openSpace');
+const openSpace = document.querySelectorAll('.openSpace');
 const space = document.querySelector('#space');
 
-const openBicycle = document.querySelector('#openBicycle');
+const openBicycle = document.querySelectorAll('.openBicycle');
 const bicycle = document.querySelector('#bicycle');
 
-openArise.addEventListener('click', () => {
-  arise.classList.add('open');
+openArise.forEach((element) => {
+  element.addEventListener('click', () => {
+    arise.classList.add('open');
+  });
 });
 
-openWeather.addEventListener('click', () => {
-  weather.classList.add('open');
+openWeather.forEach((element) => {
+  element.addEventListener('click', () => {
+    weather.classList.add('open');
+  });
 });
 
-openSpace.addEventListener('click', () => {
-  space.classList.add('open');
+openSpace.forEach((element) => {
+  element.addEventListener('click', () => {
+    space.classList.add('open');
+  });
 });
 
-openBicycle.addEventListener('click', () => {
-  bicycle.classList.add('open');
+openBicycle.forEach((element) => {
+  element.addEventListener('click', () => {
+    bicycle.classList.add('open');
+  });
 });
 
 closeModal.forEach((element) => {

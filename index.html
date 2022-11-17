@@ -19,6 +19,38 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-4623592MCV"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-4623592MCV');
+    </script>
+
+    <!-- Hotjar Tracking Code for my site -->
+    <script>
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 3252902, hjsv: 6 };
+        a = o.getElementsByTagName('head')[0];
+        r = o.createElement('script');
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
   </head>
   <body class="is-preload">
     <!-- Wrapper -->
@@ -92,8 +124,8 @@
                   Arise is influenced by the Israeli startup
                   <strong>RiseUp</strong>. It's my take on building an advanced
                   front-end with data manipulation at the component level, and
-                  providing interactive data visualization to the user. The
-                  app is functional and you are welcome to use it!
+                  providing interactive data visualization to the user. The app
+                  is functional and you are welcome to use it!
                 </p>
                 <h2>Challenges</h2>
                 <ul class="modal__challenges">
@@ -356,66 +388,55 @@
           </header>
           <div class="projects">
             <div class="project">
-              <span class="image"
-                ><a href="https://arise-mocha.vercel.app" target="_blank"
-                  ><img src="images/Arise.png" alt="Project Photo" />
-                  <div class="overlay"></div></a
+              <span class="image openArise"
+                ><img src="images/Arise.png" alt="Project Photo" />
+                <div class="overlay"></div
               ></span>
               <h3>Arise</h3>
               <p>
                 A responsive full-stack expense tracker web app. Built with
                 Next.js and MySQL using custom built RESTful APIs.
               </p>
-              <div id="openArise" class="button primary">More Info</div>
+              <div class="button primary openArise">More Info</div>
             </div>
 
             <div class="project">
-              <span class="image"
-                ><a
-                  href="https://ashkenazzio.github.io/weather2music"
-                  target="_blank"
-                  ><img src="images/weather2music.png" alt="Project Photo" />
-                  <div class="overlay"></div></a
+              <span class="image openWeather"
+                ><img src="images/weather2music.png" alt="Project Photo" />
+                <div class="overlay"></div
               ></span>
               <h3>weather2music</h3>
               <p>
                 A responsive web app that displays song recommendations based on
                 the weather. Built with React using third-party APIs.
               </p>
-              <div id="openWeather" class="button primary">More Info</div>
+              <div class="button primary openWeather">More Info</div>
             </div>
 
             <div class="project">
-              <span class="image"
-                ><a
-                  href="https://ashkenazzio.github.io/SpaceLots"
-                  target="_blank"
-                >
-                  <img src="images/SpaceLots.png" alt="Project Photo" />
-                  <div class="overlay"></div></a
+              <span class="image openSpace">
+                <img src="images/SpaceLots.png" alt="Project Photo" />
+                <div class="overlay"></div
               ></span>
               <h3>SpaceLots</h3>
               <p>
                 SpaceLots is a fun exercise of a dummy-store I built with modern
                 React using functional components and hooks.
               </p>
-              <div id="openSpace" class="button primary">More Info</div>
+              <div class="button primary openSpace">More Info</div>
             </div>
 
             <div class="project">
-              <span class="image"
-                ><a
-                  href="https://github.com/Ashkenazzio/Online-Shop"
-                  target="_blank"
-                  ><img src="images/Bicycle1.png" alt="Project Photo" />
-                  <div class="overlay"></div></a
+              <span class="image openBicycle"
+                ><img src="images/Bicycle1.png" alt="Project Photo" />
+                <div class="overlay"></div
               ></span>
               <h3>CityBicycleStuff</h3>
               <p>
                 A functional MVC e-Commerce store I've built from the ground up,
                 using Node.js, Express.js and MongoDB.
               </p>
-              <div id="openBicycle" class="button primary">More Info</div>
+              <div class="button primary openBicycle">More Info</div>
             </div>
           </div>
         </section>
