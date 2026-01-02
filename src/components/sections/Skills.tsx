@@ -1,11 +1,54 @@
+"use client";
+
 import {
   Terminal,
   PanelsTopLeft,
   Code,
   Database,
-  Cpu,
-  Palette,
+  Server,
+  Brain,
+  LucideIcon,
 } from "lucide-react";
+import { HoverCardEffect } from "../ui/hover-card-effect";
+
+interface SkillCategory {
+  icon: LucideIcon;
+  title: string;
+  skills: string[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    icon: Terminal,
+    title: "Programming Languages",
+    skills: ["JavaScript", "TypeScript", "Python", "PHP"],
+  },
+  {
+    icon: PanelsTopLeft,
+    title: "Frontend Development",
+    skills: ["React", "Next.js", "Tailwind CSS", "shadcn/ui", "Zustand", "Storybook"],
+  },
+  {
+    icon: Code,
+    title: "Backend Development",
+    skills: ["Node.js", "Nest.js", "GraphQL", "REST APIs", "Prisma", "Redis"],
+  },
+  {
+    icon: Database,
+    title: "Databases",
+    skills: ["MongoDB", "PostgreSQL", "MySQL"],
+  },
+  {
+    icon: Server,
+    title: "DevOps & Infrastructure",
+    skills: ["Docker", "Linux", "CI/CD", "Nginx", "Git"],
+  },
+  {
+    icon: Brain,
+    title: "AI & Machine Learning",
+    skills: ["PyTorch", "LangChain", "LangGraph", "RAG Systems", "AI Agents"],
+  },
+];
 
 export default function Skills() {
   return (
@@ -14,145 +57,37 @@ export default function Skills() {
         <div>
           <h2 className="section-heading">Skills</h2>
           <p className="text-muted-foreground max-w-2xl mb-12">
-            I've worked with a range of technologies in the web development
-            world, from frontend to backend and everything in between.
+            I build and deploy production applications across the full stack,
+            with growing expertise in AI/ML systems.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/20 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 text-primary rounded-md">
-                <Terminal />
+          {skillCategories.map((category) => (
+            <HoverCardEffect
+              key={category.title}
+              className="bg-card rounded-lg"
+              containerClassName="cursor-pointer"
+            >
+              <div className="p-6 h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-primary/10 text-primary rounded-md">
+                    <category.icon />
+                  </div>
+                  <h3 className="text-lg font-semibold">{category.title}</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm hover:border-primary/30 hover:bg-primary/5 transition-colors cursor-default"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <h3 className="text-lg font-semibold">Programming Languages</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                JavaScript
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Java
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Python
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                TypeScript
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                HTML/CSS
-              </span>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/20 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 text-primary rounded-md">
-                <PanelsTopLeft />
-              </div>
-              <h3 className="text-lg font-semibold">Frontend Development</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                React
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                React Native
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Next.js
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Tailwind CSS
-              </span>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/20 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 text-primary rounded-md">
-                <Code />
-              </div>
-              <h3 className="text-lg font-semibold">Backend Development</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Node.js
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Express.js
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Spring Boot
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                REST APIs
-              </span>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/20 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 text-primary rounded-md">
-                <Database />
-              </div>
-              <h3 className="text-lg font-semibold">Databases</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                MongoDB
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                MySQL
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Firebase
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                PostgreSQL
-              </span>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/20 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 text-primary rounded-md">
-                <Cpu />
-              </div>
-              <h3 className="text-lg font-semibold">
-                Tools &amp; Technologies
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Git
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Agile/Scrum
-              </span>
-            </div>
-          </div>
-          <div className="bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/20 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 text-primary rounded-md">
-                <Palette />
-              </div>
-              <h3 className="text-lg font-semibold">Design</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Figma
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Adobe AI
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                UI/UX Design
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Wireframing
-              </span>
-              <span className="inline-block px-3 py-1 bg-background border border-border rounded-full text-sm">
-                Prototyping
-              </span>
-            </div>
-          </div>
+            </HoverCardEffect>
+          ))}
         </div>
       </div>
     </section>

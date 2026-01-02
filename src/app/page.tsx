@@ -5,10 +5,12 @@ import Projects from "@/components/sections/Projects";
 import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
+import { ScrollProgress, BackToTop } from "@/components/scroll-utilities";
 
 export default function Page() {
   return (
     <>
+      <ScrollProgress />
       <Header />
       <main className="min-h-screen flex flex-col gap-16 items-center pt-16 relative overflow-hidden w-full">
         <Home />
@@ -18,6 +20,7 @@ export default function Page() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }

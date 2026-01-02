@@ -1,6 +1,51 @@
-import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
+"use client";
+
+import { useState, FormEvent } from "react";
+import { Mail, Phone, MapPin, Github, Linkedin, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
+
+// Replace with your Web3Forms access key from https://web3forms.com
+const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
 
 export default function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Message sent successfully!", {
+          description: "I'll get back to you as soon as possible.",
+        });
+        form.reset();
+      } else {
+        toast.error("Failed to send message", {
+          description: data.message || "Please try again later.",
+        });
+      }
+    } catch {
+      toast.error("Failed to send message", {
+        description: "Please check your connection and try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-14 bg-background">
       <div className="section-container">
@@ -21,27 +66,35 @@ export default function Contact() {
             </div>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <Mail />
+                <Mail className="text-primary mt-1" />
                 <div>
                   <h4 className="font-medium text-foreground">Email</h4>
                   <p className="text-sm text-muted-foreground">
-                    <a href="mailto:ashkenazzio@gmail.com">
+                    <a
+                      href="mailto:ashkenazzio@gmail.com"
+                      className="hover:text-primary transition-colors cursor-pointer"
+                    >
                       ashkenazzio@gmail.com
                     </a>
                   </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Phone />
+                <Phone className="text-primary mt-1" />
                 <div>
                   <h4 className="font-medium text-foreground">Phone</h4>
                   <p className="text-sm text-muted-foreground">
-                    <a href="tel:+972503577738">+972 50-3577738</a>
+                    <a
+                      href="tel:+972503577738"
+                      className="hover:text-primary transition-colors cursor-pointer"
+                    >
+                      +972 50-3577738
+                    </a>
                   </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <MapPin />
+                <MapPin className="text-primary mt-1" />
                 <div>
                   <h4 className="font-medium text-foreground">Location</h4>
                   <p className="text-sm text-muted-foreground">
@@ -54,41 +107,42 @@ export default function Contact() {
               <h3 className="text-lg font-semibold mb-3 text-foreground">
                 Connect with me
               </h3>
-              <div className="flex space-x-4">
+              <div className="flex space-x-3">
                 <a
                   href="https://github.com/ashkenazzio"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className="bg-muted p-3 rounded-full text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="social-icon-btn"
                 >
-                  <Github />
+                  <Github className="h-5 w-5" />
                 </a>
                 <a
                   href="https://linkedin.com/in/ashkenazzio"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="bg-muted p-3 rounded-full text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="social-icon-btn"
                 >
-                  <Linkedin />
+                  <Linkedin className="h-5 w-5" />
                 </a>
                 <a
                   href="mailto:ashkenazzio@gmail.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Email"
-                  className="bg-muted p-3 rounded-full text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="social-icon-btn"
                 >
-                  <Mail />
+                  <Mail className="h-5 w-5" />
                 </a>
               </div>
             </div>
           </div>
           <div className="md:col-span-2">
-            <form className="space-y-6 bg-card p-6 rounded-lg shadow-sm border border-border">
-              <input type="hidden" name="access_key" />
-              <input type="hidden" name="redirect" />
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6 bg-card p-6 rounded-lg shadow-sm border border-border"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label
@@ -103,6 +157,7 @@ export default function Contact() {
                     name="name"
                     placeholder="John Doe"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div className="space-y-2">
@@ -119,6 +174,7 @@ export default function Contact() {
                     name="email"
                     placeholder="john@example.com"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
@@ -135,6 +191,7 @@ export default function Contact() {
                   name="subject"
                   placeholder="How can I help you?"
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="space-y-2">
@@ -151,14 +208,19 @@ export default function Contact() {
                   placeholder="Your message here..."
                   rows={5}
                   required
+                  disabled={isSubmitting}
                 ></textarea>
               </div>
-              <button
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
-                type="submit"
-              >
-                Send Message
-              </button>
+              <Button type="submit" className="w-full btn-glow cursor-pointer" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Message"
+                )}
+              </Button>
             </form>
           </div>
         </div>
