@@ -15,32 +15,32 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-end">
             <div className="flex space-x-2 mb-4">
               <a
+                data-touch-hover
                 href="https://github.com/ashkenazzio"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="hover:text-primary transition-all duration-200 p-2 rounded-full hover:bg-white/10 cursor-pointer"
-                style={{ color: "white" }}
+                className="footer-icon-btn"
               >
                 <Github className="h-5 w-5" />
               </a>
               <a
+                data-touch-hover
                 href="https://linkedin.com/in/ashkenazzio"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="hover:text-primary transition-all duration-200 p-2 rounded-full hover:bg-white/10 cursor-pointer"
-                style={{ color: "white" }}
+                className="footer-icon-btn"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
+                data-touch-hover
                 href="mailto:ashkenazzio@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Email"
-                className="hover:text-primary transition-all duration-200 p-2 rounded-full hover:bg-white/10 cursor-pointer"
-                style={{ color: "white" }}
+                className="footer-icon-btn"
               >
                 <Mail className="h-5 w-5" />
               </a>

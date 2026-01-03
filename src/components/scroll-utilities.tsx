@@ -2,28 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { ChevronUp } from "lucide-react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 export function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setProgress(scrollPercent);
-    };
-
-    window.addEventListener("scroll", updateProgress);
-    updateProgress();
-
-    return () => window.removeEventListener("scroll", updateProgress);
-  }, []);
+  const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  const width = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  const opacity = useTransform(smoothProgress, [0, 0.95, 1], [1, 1, 0]);
 
   return (
-    <div
-      className="fixed top-0 left-0 right-0 h-1 bg-primary z-50 origin-left"
-      style={{ transform: `scaleX(${progress / 100})` }}
+    <motion.div
+      className="fixed top-0 left-0 h-1 bg-gradient-to-r from-primary to-primary/80 z-50 rounded-r-full shadow-[0_0_6px_rgba(var(--primary-rgb),0.4)]"
+      style={{ width, opacity }}
     />
   );
 }
@@ -47,16 +41,22 @@ export function BackToTop() {
   };
 
   return (
-    <button
+    <motion.button
       onClick={scrollToTop}
       aria-label="Scroll to top"
-      className={`fixed bottom-8 right-8 h-12 w-12 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer flex items-center justify-center btn-glow z-50 transition-all duration-300 ease-out ${
+      className="fixed bottom-8 right-8 h-12 w-12 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer flex items-center justify-center btn-glow z-50"
+      initial={{ opacity: 0, y: 20, scale: 0.9 }}
+      animate={
         visible
-          ? "opacity-100 translate-y-0 scale-100"
-          : "opacity-0 translate-y-4 scale-90 pointer-events-none"
-      }`}
+          ? { opacity: 1, y: 0, scale: 1 }
+          : { opacity: 0, y: 20, scale: 0.9 }
+      }
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      style={{ pointerEvents: visible ? "auto" : "none" }}
     >
       <ChevronUp className="h-7 w-7" />
-    </button>
+    </motion.button>
   );
 }

@@ -4,9 +4,48 @@ import { useState, FormEvent } from "react";
 import { Mail, Phone, MapPin, Github, Linkedin, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { motion } from "framer-motion";
 
-// Replace with your Web3Forms access key from https://web3forms.com
-const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+const WEB3FORMS_ACCESS_KEY = "d06801cb-a386-4178-81e7-7e3c93c755c9";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -25 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 15,
+    },
+  },
+};
+
+const formVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 80,
+      damping: 18,
+      delay: 0.25,
+    },
+  },
+};
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,32 +86,60 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-14 bg-background">
+    <section id="contact" className="bg-background">
       <div className="section-container">
-        <h2 className="section-heading">Get In Touch</h2>
-        <p className="text-muted-foreground max-w-2xl mb-12">
-          Have a question or want to work together? Feel free to drop me a
-          message. I'd love to hear from you!
-        </p>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+        >
+          <h2 className="section-heading mb-12">Get In Touch</h2>
+          <motion.p
+            className="text-muted-foreground mb-12"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
+          >
+            Have a question or want to work together? Feel free to drop me a
+            message. I&apos;d love to hear from you!
+          </motion.p>
+        </motion.div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-1 space-y-8">
-            <div>
+          <motion.div
+            className="md:col-span-1 space-y-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <motion.div variants={itemVariants}>
               <h3 className="text-lg font-semibold mb-3 text-foreground">
                 Contact Information
               </h3>
               <p className="text-muted-foreground">
-                Fill up the form and I'll get back to you as soon as possible.
+                Fill up the form and I&apos;ll get back to you as soon as possible.
               </p>
-            </div>
-            <div className="space-y-4">
+            </motion.div>
+
+            <motion.div className="space-y-4" variants={itemVariants}>
               <div className="flex items-start gap-3">
-                <Mail className="text-primary mt-1" />
+                <a
+                  data-touch-hover
+                  href="mailto:ashkenazzio@gmail.com"
+                  className="contact-icon-hover"
+                >
+                  <Mail className="w-5 h-5 mt-1 text-primary" />
+                </a>
                 <div>
                   <h4 className="font-medium text-foreground">Email</h4>
                   <p className="text-sm text-muted-foreground">
                     <a
+                      data-touch-hover
                       href="mailto:ashkenazzio@gmail.com"
-                      className="hover:text-primary transition-colors cursor-pointer"
+                      className="contact-link-hover"
                     >
                       ashkenazzio@gmail.com
                     </a>
@@ -80,13 +147,20 @@ export default function Contact() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Phone className="text-primary mt-1" />
+                <a
+                  data-touch-hover
+                  href="tel:+972503577738"
+                  className="contact-icon-hover"
+                >
+                  <Phone className="w-5 h-5 mt-1 text-primary" />
+                </a>
                 <div>
                   <h4 className="font-medium text-foreground">Phone</h4>
                   <p className="text-sm text-muted-foreground">
                     <a
+                      data-touch-hover
                       href="tel:+972503577738"
-                      className="hover:text-primary transition-colors cursor-pointer"
+                      className="contact-link-hover"
                     >
                       +972 50-3577738
                     </a>
@@ -94,7 +168,7 @@ export default function Contact() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <MapPin className="text-primary mt-1" />
+                <MapPin className="w-5 h-5 mt-1 text-primary" />
                 <div>
                   <h4 className="font-medium text-foreground">Location</h4>
                   <p className="text-sm text-muted-foreground">
@@ -102,47 +176,60 @@ export default function Contact() {
                   </p>
                 </div>
               </div>
-            </div>
-            <div>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
               <h3 className="text-lg font-semibold mb-3 text-foreground">
                 Connect with me
               </h3>
               <div className="flex space-x-3">
-                <a
-                  href="https://github.com/ashkenazzio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="social-icon-btn"
-                >
-                  <Github className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://linkedin.com/in/ashkenazzio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="social-icon-btn"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a
-                  href="mailto:ashkenazzio@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Email"
-                  className="social-icon-btn"
-                >
-                  <Mail className="h-5 w-5" />
-                </a>
+                {[
+                  {
+                    icon: Github,
+                    href: "https://github.com/ashkenazzio",
+                    label: "GitHub",
+                  },
+                  {
+                    icon: Linkedin,
+                    href: "https://linkedin.com/in/ashkenazzio",
+                    label: "LinkedIn",
+                  },
+                  {
+                    icon: Mail,
+                    href: "mailto:ashkenazzio@gmail.com",
+                    label: "Email",
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    data-touch-hover
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="social-icon-btn"
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </a>
+                ))}
               </div>
-            </div>
-          </div>
-          <div className="md:col-span-2">
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="md:col-span-2"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={formVariants}
+          >
             <form
               onSubmit={handleSubmit}
               className="space-y-6 bg-card p-6 rounded-lg shadow-sm border border-border"
             >
+              {/* Honeypot spam protection - hidden from users, bots fill it */}
+              <input type="checkbox" name="botcheck" className="hidden" />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label
@@ -152,7 +239,7 @@ export default function Contact() {
                     Your Name
                   </label>
                   <input
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-colors duration-200"
                     id="name"
                     name="name"
                     placeholder="John Doe"
@@ -169,7 +256,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="email"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-colors duration-200"
                     id="email"
                     name="email"
                     placeholder="john@example.com"
@@ -186,7 +273,7 @@ export default function Contact() {
                   Subject
                 </label>
                 <input
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-colors duration-200"
                   id="subject"
                   name="subject"
                   placeholder="How can I help you?"
@@ -202,7 +289,7 @@ export default function Contact() {
                   Message
                 </label>
                 <textarea
-                  className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200"
                   id="message"
                   name="message"
                   placeholder="Your message here..."
@@ -211,18 +298,27 @@ export default function Contact() {
                   disabled={isSubmitting}
                 ></textarea>
               </div>
-              <Button type="submit" className="w-full btn-glow cursor-pointer" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  "Send Message"
-                )}
-              </Button>
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
+                </Button>
+              </motion.div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

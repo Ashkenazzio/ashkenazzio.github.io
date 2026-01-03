@@ -12,7 +12,7 @@ export default function Page() {
     <>
       <ScrollProgress />
       <Header />
-      <main className="min-h-screen flex flex-col gap-16 items-center pt-16 relative overflow-hidden w-full">
+      <main className="min-h-screen bg-background">
         <Home />
         <About />
         <Projects />

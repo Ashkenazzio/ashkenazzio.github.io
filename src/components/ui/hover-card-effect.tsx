@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, ReactNode, MouseEvent, CSSProperties } from "react";
+import { useState, useRef, useEffect, ReactNode, MouseEvent, CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 interface HoverCardEffectProps {
@@ -17,14 +17,72 @@ export function HoverCardEffect({
   children,
   className,
   containerClassName,
-  glowColor = "rgba(var(--primary-rgb), 0.15)",
-  borderColor = "rgba(var(--primary-rgb), 0.4)",
+  glowColor,
+  borderColor,
   style,
   innerStyle,
 }: HoverCardEffectProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isTouchActive, setIsTouchActive] = useState(false);
+  const [primaryRgb, setPrimaryRgb] = useState("15, 120, 112");
+  const [isTouch, setIsTouch] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  // Detect touch device
+  useEffect(() => {
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    setIsTouch(isTouchDevice);
+  }, []);
+
+  // Watch for touch-active class changes (managed by TouchHoverProvider)
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const hasClass = cardRef.current?.classList.contains("touch-active") ?? false;
+          setIsTouchActive(hasClass);
+        }
+      });
+    });
+
+    observer.observe(cardRef.current, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  // Watch for theme changes and update the primary color
+  useEffect(() => {
+    const updatePrimaryColor = () => {
+      const root = document.documentElement;
+      const computedStyle = getComputedStyle(root);
+      const primaryRgbValue = computedStyle.getPropertyValue("--primary-rgb").trim();
+      if (primaryRgbValue) {
+        setPrimaryRgb(primaryRgbValue);
+      }
+    };
+
+    // Initial update
+    updatePrimaryColor();
+
+    // Watch for class changes on html element (theme switching)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          // Small delay to ensure CSS variables have updated
+          requestAnimationFrame(updatePrimaryColor);
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -38,19 +96,28 @@ export function HoverCardEffect({
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
+  // Use props if provided, otherwise use the dynamic primary color
+  const effectiveGlowColor = glowColor || `rgba(${primaryRgb}, 0.15)`;
+  const effectiveBorderColor = borderColor || `rgba(${primaryRgb}, 0.4)`;
+  const effectiveShadowColor = `rgba(${primaryRgb}, 0.2)`;
+
+  // Show hover effects on desktop hover OR on touch when this card is active
+  const showEffects = (!isTouch && isHovered) || (isTouch && isTouchActive);
+
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      data-touch-hover
+      onMouseMove={isTouch ? undefined : handleMouseMove}
+      onMouseEnter={isTouch ? undefined : handleMouseEnter}
+      onMouseLeave={isTouch ? undefined : handleMouseLeave}
       className={cn("relative h-full", containerClassName)}
       style={{
-        transform: isHovered ? "translateY(-5px)" : "translateY(0)",
-        boxShadow: isHovered
-          ? "0 10px 40px -10px rgba(var(--primary-rgb), 0.2)"
+        transform: showEffects ? "translateY(-5px)" : "translateY(0)",
+        boxShadow: showEffects
+          ? `0 10px 40px -10px ${effectiveShadowColor}`
           : "none",
-        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        transition: "transform 0.25s ease, box-shadow 0.25s ease",
         ...style,
       }}
     >
@@ -65,25 +132,32 @@ export function HoverCardEffect({
         <div
           className="absolute inset-0 pointer-events-none rounded-[inherit] border-[2px] border-white/10"
         />
-        {/* Glow effect layer */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300 overflow-hidden rounded-[inherit]"
-          style={{
-            background: `radial-gradient(150px 150px at ${mousePosition.x}px ${mousePosition.y}px, ${glowColor}, transparent 70%)`,
-            opacity: isHovered ? 1 : 0,
-            filter: "blur(60px)",
-            zIndex: 0,
-          }}
-        />
-        {/* Border highlight effect layer */}
+        {/* Glow effect layer - on desktop only (follows cursor) */}
+        {!isTouch && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300 overflow-hidden rounded-[inherit]"
+            style={{
+              background: `radial-gradient(150px 150px at ${mousePosition.x}px ${mousePosition.y}px, ${effectiveGlowColor}, transparent 70%)`,
+              opacity: showEffects ? 1 : 0,
+              filter: "blur(60px)",
+              zIndex: 0,
+            }}
+          />
+        )}
+        {/* Border highlight effect - on desktop follows cursor, on touch shows full border */}
         <div
           className="absolute pointer-events-none transition-opacity duration-300 rounded-[inherit]"
           style={{
             inset: 0,
-            border: `2px solid ${borderColor}`,
-            WebkitMaskImage: `radial-gradient(120px 120px at ${mousePosition.x}px ${mousePosition.y}px, white 30%, transparent 65%)`,
-            maskImage: `radial-gradient(120px 120px at ${mousePosition.x}px ${mousePosition.y}px, white 30%, transparent 65%)`,
-            opacity: isHovered ? 1 : 0,
+            border: `2px solid ${effectiveBorderColor}`,
+            // On desktop: radial mask following cursor. On touch: full border
+            WebkitMaskImage: isTouch
+              ? undefined
+              : `radial-gradient(120px 120px at ${mousePosition.x}px ${mousePosition.y}px, white 30%, transparent 65%)`,
+            maskImage: isTouch
+              ? undefined
+              : `radial-gradient(120px 120px at ${mousePosition.x}px ${mousePosition.y}px, white 30%, transparent 65%)`,
+            opacity: showEffects ? (isTouch ? 0.6 : 1) : 0,
           }}
         />
         {/* Card content */}

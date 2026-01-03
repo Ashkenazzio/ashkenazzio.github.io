@@ -9,7 +9,10 @@ import {
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetTitle,
 } from "../ui/sheet";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { href: "#home", label: "Home" },
@@ -38,62 +41,70 @@ export default function Header() {
   };
 
   return (
-    <>
-      <div className="fixed top-0 left-0 right-0 h-1 bg-primary z-50 origin-left"></div>
-      <header
-        className={`fixed top-0 w-full z-40 transition-all duration-300 py-4 ${
+    <header
+        className={`fixed top-0 w-full z-40 transition-all duration-300 ${
           isScrolled
-            ? "bg-background/80 backdrop-blur-md border-b border-border/50"
-            : "bg-transparent"
+            ? "bg-background/90 backdrop-blur-sm shadow-sm py-2"
+            : "bg-transparent py-4"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center">
-              <a href="/" className="cursor-pointer">
+              <Link href="/" className="cursor-pointer">
                 <span className="text-xl font-bold text-primary">OA.</span>
-              </a>
+              </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:block">
-              <div className="ml-10 flex items-center space-x-8">
+            <nav className="hidden md:flex items-center gap-8">
+              <div className="flex items-center space-x-8">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
-                    className="text-sm font-medium hover:text-primary transition-colors cursor-pointer link-underline"
+                    className="text-sm font-medium transition-colors cursor-pointer link-underline"
                   >
                     {link.label}
                   </a>
                 ))}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full cursor-pointer"
-                  onClick={toggleTheme}
-                  aria-label="Toggle theme"
-                >
+              </div>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full cursor-pointer"
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+              >
+                <AnimatePresence mode="wait" initial={false}>
                   {mounted && (
-                    <>
+                    <motion.div
+                      key={theme}
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      whileHover={{ rotate: 15 }}
+                    >
                       {theme === "dark" ? (
                         <Sun className="h-5 w-5" />
                       ) : (
                         <Moon className="h-5 w-5" />
                       )}
-                    </>
+                    </motion.div>
                   )}
-                </Button>
+                </AnimatePresence>
+              </Button>
+
+              <Button size="sm" className="cursor-pointer" asChild>
                 <a
                   href="/Omri_Ashkenazi_CV.pdf"
                   download="Omri_Ashkenazi_CV.pdf"
-                  className="cursor-pointer"
                 >
-                  <Button size="sm" className="ml-4 btn-glow cursor-pointer">
-                    Resume
-                  </Button>
+                  Resume
                 </a>
-              </div>
+              </Button>
             </nav>
 
             {/* Mobile Navigation */}
@@ -105,15 +116,23 @@ export default function Header() {
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
               >
-                {mounted && (
-                  <>
-                    {theme === "dark" ? (
-                      <Sun className="h-5 w-5" />
-                    ) : (
-                      <Moon className="h-5 w-5" />
-                    )}
-                  </>
-                )}
+                <AnimatePresence mode="wait" initial={false}>
+                  {mounted && (
+                    <motion.div
+                      key={theme}
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {theme === "dark" ? (
+                        <Sun className="h-5 w-5" />
+                      ) : (
+                        <Moon className="h-5 w-5" />
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </Button>
               <Sheet>
                 <SheetTrigger asChild>
@@ -127,6 +146,7 @@ export default function Header() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[350px]">
+                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                   <nav className="flex flex-col gap-4 mt-8">
                     {navLinks.map((link) => (
                       <SheetClose asChild key={link.href}>
@@ -155,6 +175,5 @@ export default function Header() {
           </div>
         </div>
       </header>
-    </>
   );
 }
