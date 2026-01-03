@@ -1,36 +1,39 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { Mail, Phone, MapPin, Github, Linkedin, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { motion } from "framer-motion";
+import { createContainerVariants, createItemVariants } from "@/lib/motion-variants";
+import { SOCIAL_LINKS } from "@/lib/constants";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const WEB3FORMS_ACCESS_KEY = "d06801cb-a386-4178-81e7-7e3c93c755c9";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.1,
-    },
-  },
-};
+const contactFormSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.email({ message: "Please enter a valid email address" }),
+  subject: z.string().min(3, { message: "Subject must be at least 3 characters" }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters" }),
+});
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -25 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 100,
-      damping: 15,
-    },
-  },
-};
+type ContactFormValues = z.infer<typeof contactFormSchema>;
+
+const containerVariants = createContainerVariants(0.12, 0.1);
+const itemVariants = createItemVariants({ x: -25, y: 0 });
 
 const formVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.98 },
@@ -50,13 +53,25 @@ const formVariants = {
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = async (values: ContactFormValues) => {
     setIsSubmitting(true);
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+    const formData = new FormData();
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("subject", values.subject);
+    formData.append("message", values.message);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -183,23 +198,7 @@ export default function Contact() {
                 Connect with me
               </h3>
               <div className="flex space-x-3">
-                {[
-                  {
-                    icon: Github,
-                    href: "https://github.com/ashkenazzio",
-                    label: "GitHub",
-                  },
-                  {
-                    icon: Linkedin,
-                    href: "https://linkedin.com/in/ashkenazzio",
-                    label: "LinkedIn",
-                  },
-                  {
-                    icon: Mail,
-                    href: "mailto:ashkenazzio@gmail.com",
-                    label: "Email",
-                  },
-                ].map((social) => (
+                {SOCIAL_LINKS.map((social) => (
                   <a
                     key={social.label}
                     data-touch-hover
@@ -223,101 +222,107 @@ export default function Contact() {
             viewport={{ once: true, amount: 0.2 }}
             variants={formVariants}
           >
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6 bg-card p-6 rounded-lg shadow-sm border border-border"
-            >
-              {/* Honeypot spam protection - hidden from users, bots fill it */}
-              <input type="checkbox" name="botcheck" className="hidden" />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="name"
-                    className="text-sm font-medium text-foreground"
-                  >
-                    Your Name
-                  </label>
-                  <input
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-colors duration-200"
-                    id="name"
-                    name="name"
-                    placeholder="John Doe"
-                    required
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label
-                    htmlFor="email"
-                    className="text-sm font-medium text-foreground"
-                  >
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-colors duration-200"
-                    id="email"
-                    name="email"
-                    placeholder="john@example.com"
-                    required
-                    disabled={isSubmitting}
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label
-                  htmlFor="subject"
-                  className="text-sm font-medium text-foreground"
-                >
-                  Subject
-                </label>
-                <input
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-colors duration-200"
-                  id="subject"
-                  name="subject"
-                  placeholder="How can I help you?"
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className="text-sm font-medium text-foreground"
-                >
-                  Message
-                </label>
-                <textarea
-                  className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200"
-                  id="message"
-                  name="message"
-                  placeholder="Your message here..."
-                  rows={5}
-                  required
-                  disabled={isSubmitting}
-                ></textarea>
-              </div>
-              <motion.div
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.97 }}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6 bg-card p-6 rounded-lg shadow-sm border border-border"
               >
-                <Button
-                  type="submit"
-                  className="w-full cursor-pointer"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    "Send Message"
+                {/* Honeypot spam protection - hidden from users, bots fill it */}
+                <input type="checkbox" name="botcheck" className="hidden" />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="John Doe"
+                            disabled={isSubmitting}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            placeholder="john@example.com"
+                            disabled={isSubmitting}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subject</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="How can I help you?"
+                          disabled={isSubmitting}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
-                </Button>
-              </motion.div>
-            </form>
+                />
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Your message here..."
+                          rows={5}
+                          disabled={isSubmitting}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <motion.div
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Button
+                    type="submit"
+                    className="w-full cursor-pointer"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
+                  </Button>
+                </motion.div>
+              </form>
+            </Form>
           </motion.div>
         </div>
       </div>

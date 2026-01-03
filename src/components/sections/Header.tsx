@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon, Menu } from "lucide-react";
 import { Button } from "../ui/button";
+import { TerminalLogo } from "../ui/terminal-logo";
 import {
   Sheet,
   SheetContent,
@@ -52,7 +53,7 @@ export default function Header() {
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center">
               <Link href="/" className="cursor-pointer">
-                <span className="text-xl font-bold text-primary">OA.</span>
+                <TerminalLogo size="lg" />
               </Link>
             </div>
 

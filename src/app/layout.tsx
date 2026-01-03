@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TouchHoverProvider } from "@/lib/contexts/touch-hover-context";
+import { MotionProvider } from "@/components/motion-provider";
 import { Toaster } from "sonner";
 import { Analytics } from "@/components/Analytics";
 import "./globals.css";
@@ -70,13 +71,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "48x48" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
-    apple: "/apple-icon.png",
-  },
 };
 
 export default function RootLayout({
@@ -96,7 +90,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TouchHoverProvider>
-            {children}
+            <MotionProvider>
+              {children}
+            </MotionProvider>
           </TouchHoverProvider>
           <Toaster position="bottom-right" richColors />
         </ThemeProvider>

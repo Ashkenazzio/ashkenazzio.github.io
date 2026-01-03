@@ -1,17 +1,29 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Github, ChevronDown, ChevronUp, Ticket, ExternalLink } from 'lucide-react';
+import {
+  Github,
+  ChevronDown,
+  ChevronUp,
+  Ticket,
+  ExternalLink,
+} from 'lucide-react';
 import { Button } from '../ui/button';
 import { HoverCardEffect } from '../ui/hover-card-effect';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// Luxurious easing function - ease-out-quint for smooth deceleration
-const easeOutQuint = (t: number): number => 1 - Math.pow(1 - t, 5);
+import {
+  createContainerVariants,
+  createItemVariants,
+  createHeadingVariants,
+  easeOutQuint,
+} from '@/lib/motion-variants';
 
 // Custom smooth scroll with configurable duration and easing
-const smoothScrollTo = (targetY: number, duration: number = 1200): Promise<void> => {
-  return new Promise((resolve) => {
+const smoothScrollTo = (
+  targetY: number,
+  duration: number = 1200
+): Promise<void> => {
+  return new Promise(resolve => {
     const startY = window.scrollY;
     const distance = targetY - startY;
     const startTime = performance.now();
@@ -52,10 +64,23 @@ const projects = [
       'A full-stack ticketing platform featuring user authentication, role-based access control, and a modern GraphQL API architecture with type-safe database operations.',
     image: null,
     placeholder: Ticket,
-    tags: ['Next.js', 'Nest.js', 'GraphQL', 'Prisma', 'TypeScript', 'Full-Stack'],
+    tags: [
+      'Next.js',
+      'Nest.js',
+      'GraphQL',
+      'Prisma',
+      'TypeScript',
+      'Full-Stack',
+    ],
     github: [
-      { label: 'Frontend', url: 'https://github.com/ashkenazzio/ticketz-frontend' },
-      { label: 'Backend', url: 'https://github.com/ashkenazzio/ticketz-backend' },
+      {
+        label: 'Frontend',
+        url: 'https://github.com/ashkenazzio/ticketz-frontend',
+      },
+      {
+        label: 'Backend',
+        url: 'https://github.com/ashkenazzio/ticketz-backend',
+      },
     ],
     live: null,
   },
@@ -65,7 +90,7 @@ const projects = [
     description:
       'A web app that recommends songs based on current weather conditions, integrating multiple third-party APIs.',
     image: 'weather2music.png',
-    tags: ['React', 'REST APIs', 'Tailwind CSS', 'API Integration'],
+    tags: ['React', 'REST APIs', 'API Integration', 'UI/UX'],
     github: 'https://github.com/ashkenazzio/weather2music',
     live: 'https://ashkenazzio.github.io/weather2music',
   },
@@ -75,7 +100,13 @@ const projects = [
     description:
       'Computer Vision deep learning model for classifying brain MRI scans into 4 categories using PyTorch and EfficientNet-B0 transfer learning, achieving 99.47% accuracy.',
     image: 'BrainTumorClassification.png',
-    tags: ['Python', 'PyTorch', 'Computer Vision', 'Deep Learning', 'Transfer Learning'],
+    tags: [
+      'Python',
+      'PyTorch',
+      'Computer Vision',
+      'Deep Learning',
+      'Transfer Learning',
+    ],
     github: 'https://github.com/ashkenazzio/brain-tumor-classification',
     live: null,
   },
@@ -103,42 +134,14 @@ const projects = [
 
 const INITIAL_PROJECTS_COUNT = 3;
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring" as const,
-      stiffness: 80,
-      damping: 14,
-    },
-  },
-};
-
-const headingVariants = {
-  hidden: { opacity: 0, x: -30 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
+const containerVariants = createContainerVariants(0.15, 0.1);
+const itemVariants = createItemVariants({
+  y: 30,
+  scale: 0.95,
+  stiffness: 80,
+  damping: 14,
+});
+const headingVariants = createHeadingVariants('x', -30);
 
 export default function Projects() {
   const [showAll, setShowAll] = useState(false);
@@ -170,7 +173,8 @@ export default function Projects() {
           // Mobile: heading right beneath header with minimal margin
           // Desktop: more breathing room
           const scrollMargin = isMobile ? 16 : 40;
-          const targetY = window.scrollY + headingRect.top - headerHeight - scrollMargin;
+          const targetY =
+            window.scrollY + headingRect.top - headerHeight - scrollMargin;
           smoothScrollTo(Math.max(0, targetY), 1000);
         }
         // Reset justClosed after the delay animation completes
@@ -186,10 +190,7 @@ export default function Projects() {
             const viewportHeight = window.innerHeight;
             // Scroll so the button is near the bottom of the viewport
             const targetY =
-              window.scrollY +
-              buttonRect.bottom -
-              viewportHeight +
-              60; // 60px padding from bottom
+              window.scrollY + buttonRect.bottom - viewportHeight + 60; // 60px padding from bottom
             smoothScrollTo(targetY, 1200);
           }
         });
@@ -206,16 +207,18 @@ export default function Projects() {
           viewport={{ once: true, amount: 0.2 }}
           variants={headingVariants}
         >
-          <h2 ref={headingRef} className="section-heading mb-12">Projects</h2>
+          <h2 ref={headingRef} className="section-heading mb-12">
+            Projects
+          </h2>
           <motion.p
             className="text-muted-foreground mb-12"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.15, ease: 'easeOut' }}
           >
-            Here are some of the projects I&apos;ve worked on, showcasing my skills in
-            various technologies and problem domains.
+            Here are some of the projects I&apos;ve worked on, showcasing my
+            skills in various technologies and problem domains.
           </motion.p>
         </motion.div>
 
@@ -235,7 +238,10 @@ export default function Projects() {
               : undefined;
             // Reverse stagger for closing: last project animates first
             const closeDelay = isExtraProject
-              ? `${(extraProjectsCount - 1 - (index - INITIAL_PROJECTS_COUNT)) * 100}ms`
+              ? `${
+                  (extraProjectsCount - 1 - (index - INITIAL_PROJECTS_COUNT)) *
+                  100
+                }ms`
               : undefined;
 
             // For initial projects, use Framer Motion variants
@@ -246,17 +252,14 @@ export default function Projects() {
               : { variants: itemVariants };
 
             return (
-              <ProjectWrapper
-                key={project.id}
-                {...wrapperProps}
-              >
+              <ProjectWrapper key={project.id} {...wrapperProps}>
                 <HoverCardEffect
                   className={`bg-card rounded-lg overflow-hidden h-full ${
                     isExtraProject && showAll && !isClosing
                       ? 'animate-pop-in'
                       : ''
                   }${isExtraProject && isClosing ? ' animate-pop-out' : ''}`}
-                  containerClassName="cursor-pointer h-full"
+                  containerClassName="h-full"
                   innerStyle={
                     isExtraProject
                       ? { animationDelay: isClosing ? closeDelay : openDelay }
@@ -278,18 +281,23 @@ export default function Projects() {
                       ) : null}
                       <div className="absolute inset-0 bg-primary/30 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {Array.isArray(project.github) ? (
-                          project.github.map((repo) => (
+                          project.github.map(repo => (
                             <motion.a
                               key={repo.label}
                               href={repo.url}
-                              className="bg-background/90 text-foreground p-3 rounded-full hover:bg-background transition-colors cursor-pointer"
+                              className="flex flex-col items-center gap-1.5 cursor-pointer"
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label={`${repo.label} repository for ${project.title}`}
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.88 }}
                             >
-                              <Github className="h-5 w-5" />
+                              <span className="bg-background/90 text-foreground p-3 rounded-full hover:bg-background transition-colors">
+                                <Github className="h-5 w-5" />
+                              </span>
+                              <span className="bg-background/90 text-foreground text-xs font-medium px-2 py-0.5 rounded-full">
+                                {repo.label}
+                              </span>
                             </motion.a>
                           ))
                         ) : (
@@ -340,7 +348,7 @@ export default function Projects() {
                       </div>
                       <div className="flex gap-3 pt-2 mt-auto flex-wrap">
                         {Array.isArray(project.github) ? (
-                          project.github.map((repo) => (
+                          project.github.map(repo => (
                             <a
                               key={repo.label}
                               href={repo.url}
@@ -397,7 +405,7 @@ export default function Projects() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{
                     duration: 0.2,
-                    delay: justClosed && !showAll ? 0.35 : 0
+                    delay: justClosed && !showAll ? 0.35 : 0,
                   }}
                 >
                   <Button

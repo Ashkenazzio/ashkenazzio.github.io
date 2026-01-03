@@ -4,55 +4,13 @@ import { FileText, GraduationCap, Briefcase, Download } from 'lucide-react';
 import { Button } from '../ui/button';
 import { HoverCardEffect } from '../ui/hover-card-effect';
 import { motion } from 'framer-motion';
+import { createContainerVariants, createItemVariants } from '@/lib/motion-variants';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.1,
-    },
-  },
-};
+const containerVariants = createContainerVariants(0.12, 0.1);
+const itemVariants = createItemVariants({ y: 25 });
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 25, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: 'spring' as const,
-      stiffness: 100,
-      damping: 15,
-    },
-  },
-};
-
-const profileContainerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const profileItemVariants = {
-  hidden: { opacity: 0, x: 20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      type: 'spring' as const,
-      stiffness: 100,
-      damping: 12,
-    },
-  },
-};
+const profileContainerVariants = createContainerVariants(0.1, 0.3);
+const profileItemVariants = createItemVariants({ x: 20, y: 0, damping: 12 });
 
 export default function About() {
   return (
@@ -96,7 +54,7 @@ export default function About() {
               <motion.div variants={itemVariants}>
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
-                  containerClassName="cursor-pointer h-full"
+                  containerClassName="h-full"
                 >
                   <div className="p-6 h-full">
                     <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
@@ -126,7 +84,7 @@ export default function About() {
               <motion.div variants={itemVariants}>
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
-                  containerClassName="cursor-pointer h-full"
+                  containerClassName="h-full"
                 >
                   <div className="p-6 h-full">
                     <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">

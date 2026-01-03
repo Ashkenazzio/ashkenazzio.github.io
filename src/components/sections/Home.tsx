@@ -1,9 +1,9 @@
 'use client';
 
 import { Button } from '../ui/button';
-import { Github, Linkedin, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSmoothScroll } from '@/lib/hooks/use-smooth-scroll';
+import { SOCIAL_LINKS } from '@/lib/constants';
 
 export default function Home() {
   const { scrollToSection } = useSmoothScroll();
@@ -145,27 +145,11 @@ export default function Home() {
 
             {/* Social Links */}
             <div className="flex items-center gap-2 ml-0 lg:ml-4 mt-4 lg:mt-0">
-              {[
-                {
-                  icon: Github,
-                  link: 'https://github.com/ashkenazzio',
-                  label: 'GitHub',
-                },
-                {
-                  icon: Linkedin,
-                  link: 'https://linkedin.com/in/ashkenazzio',
-                  label: 'LinkedIn',
-                },
-                {
-                  icon: Mail,
-                  link: 'mailto:ashkenazzio@gmail.com',
-                  label: 'Email',
-                },
-              ].map((social, index) => (
+              {SOCIAL_LINKS.map((social) => (
                 <a
-                  key={index}
+                  key={social.label}
                   data-touch-hover
-                  href={social.link}
+                  href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="icon-btn"

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { HoverCardEffect } from "../ui/hover-card-effect";
 import { motion } from "framer-motion";
+import { createContainerVariants, createItemVariants, createHeadingVariants } from "@/lib/motion-variants";
 
 interface SkillCategory {
   icon: LucideIcon;
@@ -51,42 +52,9 @@ const skillCategories: SkillCategory[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.15,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, scale: 0.9, rotate: -2 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    rotate: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 120,
-      damping: 12,
-    },
-  },
-};
-
-const headingVariants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
+const containerVariants = createContainerVariants(0.08, 0.15);
+const itemVariants = createItemVariants({ scale: 0.9, rotate: -2, y: 0, stiffness: 120, damping: 12 });
+const headingVariants = createHeadingVariants('y', -20);
 
 
 export default function Skills() {
@@ -123,7 +91,7 @@ export default function Skills() {
             <motion.div key={category.title} variants={itemVariants}>
               <HoverCardEffect
                 className="bg-card rounded-lg h-full"
-                containerClassName="cursor-pointer h-full"
+                containerClassName="h-full"
               >
                 <div className="p-6 h-full">
                   <div className="flex items-center gap-3 mb-4">

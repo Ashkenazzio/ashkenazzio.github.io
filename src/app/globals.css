@@ -60,19 +60,6 @@ body {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 :root {
@@ -99,19 +86,6 @@ body {
   --border: oklch(0.91 0.02 180);
   --input: oklch(0.91 0.02 180);
   --ring: oklch(0.48 0.12 180);
-  --chart-1: oklch(0.48 0.12 180);
-  --chart-2: oklch(0.6 0.18 290);
-  --chart-3: oklch(0.55 0.15 230);
-  --chart-4: oklch(0.65 0.18 270);
-  --chart-5: oklch(0.6 0.2 280);
-  --sidebar: oklch(0.99 0.003 180);
-  --sidebar-foreground: oklch(0.35 0.04 180);
-  --sidebar-primary: oklch(0.48 0.12 180);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.96 0.015 180);
-  --sidebar-accent-foreground: oklch(0.4 0.06 180);
-  --sidebar-border: oklch(0.91 0.02 180);
-  --sidebar-ring: oklch(0.48 0.12 180);
   --footer-background: oklch(0.18 0.04 180);
   --codebg: oklch(0.16 0.025 180);
 }
@@ -136,19 +110,6 @@ body {
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.6 0.11 180);
-  --chart-1: oklch(0.6 0.11 180);
-  --chart-2: oklch(0.55 0.1 160);
-  --chart-3: oklch(0.5 0.08 200);
-  --chart-4: oklch(0.58 0.09 170);
-  --chart-5: oklch(0.52 0.11 190);
-  --sidebar: oklch(0.17 0.015 180);
-  --sidebar-foreground: oklch(0.95 0.005 180);
-  --sidebar-primary: oklch(0.6 0.11 180);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.23 0.025 180);
-  --sidebar-accent-foreground: oklch(0.95 0.005 180);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.6 0.11 180);
   --footer-background: oklch(0.18 0.04 180);
   --codebg: oklch(0.14 0.015 180);
 }
@@ -183,10 +144,6 @@ body {
     @apply left-1/2 -translate-x-1/2;
   }
 
-  .highlight-text {
-    @apply text-primary;
-  }
-
   .bg-codebg {
     background-color: var(--codebg);
   }
@@ -197,21 +154,6 @@ body {
 
   .touch-target {
     @apply min-h-[44px] min-w-[44px];
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 cursor-pointer;
-  }
-
-  .card-hover:hover {
-    @apply -translate-y-1;
-    border-color: oklch(0.585 0.233 277 / 40%);
-    box-shadow: 0 10px 40px -10px oklch(0.585 0.233 277 / 20%);
-  }
-
-  .dark .card-hover:hover {
-    border-color: oklch(0.68 0.19 277 / 40%);
-    box-shadow: 0 10px 40px -10px oklch(0.68 0.19 277 / 20%);
   }
 
   .btn-glow {
@@ -230,29 +172,6 @@ body {
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse-slow {
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -281,16 +200,6 @@ body {
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
 @keyframes tilt {
   0%,
   100% {
@@ -307,18 +216,6 @@ body {
 
 .animate-tilt {
   animation: tilt 8s ease-in-out infinite;
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
 }
 
 .animate-pop-in {
@@ -555,9 +452,6 @@ body {
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   .animate-rotate-slow,
-  .animate-pulse-slow,
-  .animate-fade-in-up,
-  .animate-float,
   .animate-tilt,
   .animate-pop-in {
     animation: none;
