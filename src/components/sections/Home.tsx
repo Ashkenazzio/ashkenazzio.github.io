@@ -57,8 +57,8 @@ export default function Home() {
             className="text-sm md:text-base font-medium text-primary opacity-90 mb-2"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 0.4, ease: 'easeOut' }}
           >
             Hello! I&apos;m
           </motion.span>
@@ -67,10 +67,10 @@ export default function Home() {
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{
               duration: 0.6,
-              delay: 0.4,
+              delay: 0.6,
               type: 'spring',
               stiffness: 100,
             }}
@@ -82,8 +82,8 @@ export default function Home() {
             className="text-xl md:text-2xl text-primary font-light mb-6"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 0.8, ease: 'easeOut' }}
           >
             Full-Stack & AI Engineer
           </motion.p>
@@ -92,8 +92,8 @@ export default function Home() {
             className="text-muted-foreground mb-6"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 1.0, ease: 'easeOut' }}
           >
             Building elegant solutions to complex problems with modern
             technologies.
@@ -103,8 +103,8 @@ export default function Home() {
             className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 relative z-10"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 1, ease: 'easeOut' }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 1.2, ease: 'easeOut' }}
           >
             <div className="flex flex-row items-center gap-4">
               <motion.div
@@ -167,10 +167,10 @@ export default function Home() {
           className="w-full max-w-md"
           initial={{ opacity: 0, scale: 0.95, rotate: -2 }}
           whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{
             duration: 0.7,
-            delay: 1.2,
+            delay: 1.4,
             type: 'spring',
             stiffness: 80,
             damping: 15,
@@ -214,8 +214,8 @@ export default function Home() {
                 className="space-y-2 font-mono text-xs min-[436px]:text-sm"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ staggerChildren: 0.15, delayChildren: 1.4 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ staggerChildren: 0.15, delayChildren: 1.6 }}
               >
                 <div className="text-gray-500">{'// Software Engineer'}</div>
                 <div>

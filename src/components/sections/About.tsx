@@ -4,13 +4,6 @@ import { FileText, GraduationCap, Briefcase, Download } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { HoverCardEffect } from '../ui/HoverCardEffect';
 import { motion } from 'framer-motion';
-import { createContainerVariants, createItemVariants } from '@/lib/motion-variants';
-
-const containerVariants = createContainerVariants(0.12, 0.1);
-const itemVariants = createItemVariants({ y: 25 });
-
-const profileContainerVariants = createContainerVariants(0.1, 0.3);
-const profileItemVariants = createItemVariants({ x: 20, y: 0, damping: 12 });
 
 export default function About() {
   return (
@@ -19,24 +12,23 @@ export default function About() {
       <div className="section-container">
         <motion.h2
           className="section-heading mb-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={itemVariants}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ type: "spring", stiffness: 100, damping: 15 }}
         >
           About Me
         </motion.h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           {/* Content Column */}
-          <motion.div
-            className="lg:col-span-8 space-y-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={containerVariants}
-          >
-            <motion.div variants={itemVariants}>
+          <div className="lg:col-span-8 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 15 }}
+            >
               <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-primary" />
                 Bio
@@ -51,7 +43,12 @@ export default function About() {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <motion.div variants={itemVariants}>
+              <motion.div
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
+              >
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
                   containerClassName="h-full rounded-lg"
@@ -81,7 +78,12 @@ export default function About() {
                 </HoverCardEffect>
               </motion.div>
 
-              <motion.div variants={itemVariants}>
+              <motion.div
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.2 }}
+              >
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
                   containerClassName="h-full rounded-lg"
@@ -115,17 +117,18 @@ export default function About() {
                 </HoverCardEffect>
               </motion.div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Profile Column */}
-          <motion.div
-            className="lg:col-span-4 flex flex-col items-center lg:items-start gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={profileContainerVariants}
-          >
-            <motion.div className="relative" variants={profileItemVariants}>
+          <div className="lg:col-span-4 flex flex-col items-center lg:items-start gap-6">
+            {/* Image + Title group */}
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 12 }}
+            >
               <span
                 data-touch-hover
                 className="profile-hover relative flex shrink-0 overflow-hidden rounded-full w-40 h-40 border-4 border-primary/20"
@@ -142,8 +145,11 @@ export default function About() {
             </motion.div>
 
             <motion.div
-              variants={profileItemVariants}
               className="text-center lg:text-left"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 12, delay: 0.1 }}
             >
               <h3 className="text-2xl font-bold">Omri Ashkenazi</h3>
               <p className="text-muted-foreground">
@@ -151,9 +157,13 @@ export default function About() {
               </p>
             </motion.div>
 
+            {/* Tags */}
             <motion.div
-              variants={profileItemVariants}
               className="flex flex-wrap gap-2 justify-center lg:justify-start"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 12, delay: 0.2 }}
             >
               {['Full Stack', 'AI/ML', 'Next.js', 'Docker'].map(skill => (
                 <span key={skill} data-touch-hover className="about-tag">
@@ -162,8 +172,12 @@ export default function About() {
               ))}
             </motion.div>
 
+            {/* Download button */}
             <motion.div
-              variants={profileItemVariants}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 12, delay: 0.3 }}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.92 }}
             >
@@ -177,7 +191,7 @@ export default function About() {
                 </a>
               </Button>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

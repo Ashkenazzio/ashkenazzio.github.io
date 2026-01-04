@@ -5,7 +5,7 @@ import { Variants } from 'framer-motion';
  */
 export const createContainerVariants = (
   staggerChildren: number = 0.12,
-  delayChildren: number = 0.1
+  delayChildren: number = 0.3
 ): Variants => ({
   hidden: { opacity: 0 },
   visible: {

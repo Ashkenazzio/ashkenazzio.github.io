@@ -5,7 +5,6 @@ import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "../ui/Button";
 import { motion } from "framer-motion";
-import { createContainerVariants, createItemVariants } from "@/lib/motion-variants";
 import { SOCIAL_LINKS } from "@/lib/constants";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,24 +30,6 @@ const contactFormSchema = z.object({
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
-
-const containerVariants = createContainerVariants(0.12, 0.1);
-const itemVariants = createItemVariants({ x: -25, y: 0 });
-
-const formVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring" as const,
-      stiffness: 80,
-      damping: 18,
-      delay: 0.25,
-    },
-  },
-};
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -103,34 +84,34 @@ export default function Contact() {
   return (
     <section id="contact" className="bg-background pb-8 sm:pb-12">
       <div className="section-container">
-        <motion.div
+        <motion.h2
+          className="section-heading mb-8"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, margin: "-15%" }}
           transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
         >
-          <h2 className="section-heading mb-8">Get In Touch</h2>
-          <motion.p
-            className="text-muted-foreground mb-8"
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
-          >
-            Have a question or want to work together? Feel free to drop me a
-            message. I&apos;d love to hear from you!
-          </motion.p>
-        </motion.div>
+          Get In Touch
+        </motion.h2>
+        <motion.p
+          className="text-muted-foreground mb-8"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+        >
+          Have a question or want to work together? Feel free to drop me a
+          message. I&apos;d love to hear from you!
+        </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <motion.div
-            className="md:col-span-1 space-y-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.div variants={itemVariants}>
+          <div className="md:col-span-1 space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: -25 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 15 }}
+            >
               <h3 className="text-lg font-semibold mb-3 text-foreground">
                 Contact Information
               </h3>
@@ -139,7 +120,13 @@ export default function Contact() {
               </p>
             </motion.div>
 
-            <motion.div className="space-y-4" variants={itemVariants}>
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, x: -25 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
+            >
               <div className="flex items-start gap-3">
                 <a
                   data-touch-hover
@@ -193,7 +180,12 @@ export default function Contact() {
               </div>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
+            <motion.div
+              initial={{ opacity: 0, x: -25 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.2 }}
+            >
               <h3 className="text-lg font-semibold mb-3 text-foreground">
                 Connect with me
               </h3>
@@ -213,14 +205,14 @@ export default function Contact() {
                 ))}
               </div>
             </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div
             className="md:col-span-2"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={formVariants}
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ type: "spring", stiffness: 80, damping: 18 }}
           >
             <Form {...form}>
               <form

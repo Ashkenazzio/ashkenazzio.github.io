@@ -13,12 +13,7 @@ import {
 import { Button } from '../ui/Button';
 import { HoverCardEffect } from '../ui/HoverCardEffect';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
-import {
-  createContainerVariants,
-  createItemVariants,
-  createHeadingVariants,
-  easeOutQuint,
-} from '@/lib/motion-variants';
+import { easeOutQuint } from '@/lib/motion-variants';
 
 // Custom smooth scroll with configurable duration and easing
 const smoothScrollTo = (
@@ -147,15 +142,6 @@ const getImageSrcSet = (imageName: string) => {
   };
 };
 
-const containerVariants = createContainerVariants(0.15, 0.1);
-const itemVariants = createItemVariants({
-  y: 30,
-  scale: 0.95,
-  stiffness: 80,
-  damping: 14,
-});
-const headingVariants = createHeadingVariants('x', -30);
-
 // Hook to detect mobile viewport
 const useIsMobile = (breakpoint: number = 768) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -241,7 +227,7 @@ export default function Projects() {
         }
         // Reset justClosed after the delay animation completes
         setTimeout(() => setJustClosed(false), 400);
-      }, 300); // Match animation duration
+      }, 500); // stagger (200ms) + anim (300ms) = 500ms
     } else {
       setShowAll(true);
       // Scroll to show new projects only on desktop
@@ -263,26 +249,26 @@ export default function Projects() {
   return (
     <section id="projects" ref={sectionRef} className="bg-background/50">
       <div className="section-container">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={headingVariants}
+        <motion.h2
+          ref={headingRef}
+          className="section-heading mb-8"
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <h2 ref={headingRef} className="section-heading mb-8">
-            Projects
-          </h2>
-          <motion.p
-            className="text-muted-foreground mb-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.15, ease: 'easeOut' }}
-          >
-            Here are some of the projects I&apos;ve worked on, showcasing my
-            skills in various technologies and problem domains.
-          </motion.p>
-        </motion.div>
+          Projects
+        </motion.h2>
+        <motion.p
+          className="text-muted-foreground mb-8"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
+        >
+          Here are some of the projects I&apos;ve worked on, showcasing my
+          skills in various technologies and problem domains.
+        </motion.p>
 
         {/* Mobile Carousel View */}
         {isMobile ? (
@@ -290,7 +276,7 @@ export default function Projects() {
             className="relative"
             initial={{ opacity: 0, y: 30, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{
               type: 'spring',
               stiffness: 80,
@@ -485,13 +471,9 @@ export default function Projects() {
         ) : (
           /* Desktop Grid View */
           <>
-            <motion.div
+            <div
               ref={gridRef}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
             >
               {displayedProjects.map((project, index) => {
                 const isExtraProject = index >= INITIAL_PROJECTS_COUNT;
@@ -500,19 +482,29 @@ export default function Projects() {
                   ? `${(index - INITIAL_PROJECTS_COUNT) * 100}ms`
                   : undefined;
                 // Reverse stagger for closing: last project animates first
-                const closeDelay = isExtraProject
-                  ? `${
-                      (extraProjectsCount - 1 - (index - INITIAL_PROJECTS_COUNT)) *
-                      100
-                    }ms`
-                  : undefined;
+                const closeDelayMs = isExtraProject
+                  ? (extraProjectsCount - 1 - (index - INITIAL_PROJECTS_COUNT)) * 100
+                  : 0;
+                const closeDelay = `${closeDelayMs}ms`;
+                // Card and blur animate together (matching entrance behavior)
+                const cardCloseDelay = closeDelay;
 
-                // For initial projects, use Framer Motion variants
+                // For initial projects, use individual viewport triggers
                 // For extra projects, use CSS animations for show/hide
                 const ProjectWrapper = isExtraProject ? 'div' : motion.div;
                 const wrapperProps = isExtraProject
                   ? {}
-                  : { variants: itemVariants };
+                  : {
+                      initial: { opacity: 0, y: 30, scale: 0.95 },
+                      whileInView: { opacity: 1, y: 0, scale: 1 },
+                      viewport: { once: true, margin: '-10%' },
+                      transition: {
+                        type: 'spring' as const,
+                        stiffness: 80,
+                        damping: 14,
+                        delay: index * 0.1,
+                      },
+                    };
 
                 return (
                   <ProjectWrapper key={project.id} {...wrapperProps}>
@@ -525,7 +517,7 @@ export default function Projects() {
                       containerClassName="h-full rounded-lg"
                       innerStyle={
                         isExtraProject
-                          ? { animationDelay: isClosing ? closeDelay : openDelay }
+                          ? { animationDelay: isClosing ? cardCloseDelay : openDelay }
                           : undefined
                       }
                     >
@@ -536,10 +528,15 @@ export default function Projects() {
                               {...getImageSrcSet(project.image)}
                               alt={project.title}
                               loading="lazy"
-                              className="w-full h-48 object-cover"
+                              className={`w-full h-48 object-cover${isExtraProject && isClosing ? ' animate-blur-out' : ''}`}
+                              style={
+                                isExtraProject && isClosing
+                                  ? { animationDelay: closeDelay }
+                                  : undefined
+                              }
                               initial={{ filter: 'blur(16px)', opacity: 0 }}
                               whileInView={{ filter: 'blur(0px)', opacity: 1 }}
-                              viewport={{ once: true }}
+                              viewport={{ once: true, margin: "-15%" }}
                               transition={{
                                 opacity: { duration: 0.3, ease: 'easeOut' },
                                 filter: { duration: 0.6, delay: 0.15, ease: 'easeOut' },
@@ -668,7 +665,7 @@ export default function Projects() {
                   </ProjectWrapper>
                 );
               })}
-            </motion.div>
+            </div>
 
             {projects.length > INITIAL_PROJECTS_COUNT && (
               <div className="flex justify-center mt-12">
