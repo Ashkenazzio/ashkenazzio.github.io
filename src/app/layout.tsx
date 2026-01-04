@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
-import { TouchHoverProvider } from "@/lib/contexts/touch-hover-context";
-import { MotionProvider } from "@/components/motion-provider";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { TouchHoverProvider } from "@/lib/contexts/TouchHoverContext";
+import { MotionProvider } from "@/components/MotionProvider";
 import { Toaster } from "sonner";
 import { Analytics } from "@/components/Analytics";
 import "./globals.css";
@@ -86,7 +86,8 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           <TouchHoverProvider>

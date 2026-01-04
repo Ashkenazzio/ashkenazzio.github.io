@@ -5,7 +5,7 @@ import Projects from "@/components/sections/Projects";
 import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
-import { ScrollProgress, BackToTop } from "@/components/scroll-utilities";
+import { ScrollProgress, BackToTop } from "@/components/ScrollUtilities";
 
 export default function Page() {
   return (

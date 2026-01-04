@@ -1,5 +1,5 @@
 import { SOCIAL_LINKS } from "@/lib/constants";
-import { TerminalLogo } from "../ui/terminal-logo";
+import { TerminalLogo } from "../ui/TerminalLogo";
 
 export default function Footer() {
   return (

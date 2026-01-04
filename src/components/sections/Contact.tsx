@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
+import { Button } from "../ui/Button";
 import { motion } from "framer-motion";
 import { createContainerVariants, createItemVariants } from "@/lib/motion-variants";
 import { SOCIAL_LINKS } from "@/lib/constants";
@@ -17,9 +17,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 
 const WEB3FORMS_ACCESS_KEY = "d06801cb-a386-4178-81e7-7e3c93c755c9";
 

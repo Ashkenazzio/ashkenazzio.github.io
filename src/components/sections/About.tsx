@@ -1,8 +1,8 @@
 'use client';
 
 import { FileText, GraduationCap, Briefcase, Download } from 'lucide-react';
-import { Button } from '../ui/button';
-import { HoverCardEffect } from '../ui/hover-card-effect';
+import { Button } from '../ui/Button';
+import { HoverCardEffect } from '../ui/HoverCardEffect';
 import { motion } from 'framer-motion';
 import { createContainerVariants, createItemVariants } from '@/lib/motion-variants';
 
@@ -54,7 +54,7 @@ export default function About() {
               <motion.div variants={itemVariants}>
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
-                  containerClassName="h-full"
+                  containerClassName="h-full rounded-lg"
                 >
                   <div className="p-6 h-full">
                     <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
@@ -84,7 +84,7 @@ export default function About() {
               <motion.div variants={itemVariants}>
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
-                  containerClassName="h-full"
+                  containerClassName="h-full rounded-lg"
                 >
                   <div className="p-6 h-full">
                     <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
@@ -134,7 +134,9 @@ export default function About() {
                   className="aspect-square h-full w-full"
                   alt="Omri Ashkenazi"
                   loading="lazy"
-                  src="/Omri-bw.png"
+                  src="/Omri-bw-320w.webp"
+                  srcSet="/Omri-bw-160w.webp 160w, /Omri-bw-320w.webp 320w, /Omri-bw.webp 600w"
+                  sizes="160px"
                 />
               </span>
             </motion.div>

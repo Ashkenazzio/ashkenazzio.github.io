@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { motion } from 'framer-motion';
 import { useSmoothScroll } from '@/lib/hooks/use-smooth-scroll';
 import { SOCIAL_LINKS } from '@/lib/constants';
@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center pt-16 relative overflow-hidden"
+      className="min-h-svh sm:min-h-screen flex items-start sm:items-center pt-14 sm:pt-16 pb-4 sm:pb-0 relative overflow-hidden"
     >
       {/* Background gradients - aurora effect */}
       <div className="absolute inset-0 -z-10 bg-background"></div>
@@ -190,9 +190,9 @@ export default function Home() {
 
             <div
               data-touch-hover
-              className="hero-code-hover relative bg-white dark:bg-[var(--codebg)] border border-gray-200/50 dark:border-white/10 backdrop-blur-sm p-6 rounded-2xl shadow-[0_0_30px_rgba(var(--primary-rgb),0.1)]"
+              className="hero-code-hover relative bg-white dark:bg-[var(--codebg)] border border-gray-200/50 dark:border-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-[0_0_30px_rgba(var(--primary-rgb),0.1)]"
             >
-              <div className="flex justify-between items-center mb-6">
+              <div className="flex justify-between items-center mb-4 sm:mb-6">
                 <div className="flex space-x-2">
                   <motion.div
                     className="w-3 h-3 rounded-full bg-red-500"
@@ -210,7 +210,13 @@ export default function Home() {
                 <div className="text-xs text-gray-500">engineer.ts</div>
               </div>
 
-              <div className="space-y-2 font-mono text-sm">
+              <motion.div
+                className="space-y-2 font-mono text-xs min-[436px]:text-sm"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ staggerChildren: 0.15, delayChildren: 1.4 }}
+              >
                 <div className="text-gray-500">{'// Software Engineer'}</div>
                 <div>
                   <span className="text-pink-600 dark:text-pink-400">
@@ -230,10 +236,11 @@ export default function Home() {
                 </div>
                 <motion.div
                   className="pl-6"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 1.4, duration: 0.3 }}
+                  variants={{
+                    hidden: { opacity: 0, x: -10 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.3 }}
                 >
                   <span className="text-purple-600 dark:text-purple-400">
                     name
@@ -246,10 +253,11 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   className="pl-6"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 1.6, duration: 0.3 }}
+                  variants={{
+                    hidden: { opacity: 0, x: -10 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.3 }}
                 >
                   <span className="text-purple-600 dark:text-purple-400">
                     skills
@@ -276,10 +284,11 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   className="pl-6"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 1.8, duration: 0.3 }}
+                  variants={{
+                    hidden: { opacity: 0, x: -10 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.3 }}
                 >
                   <span className="text-purple-600 dark:text-purple-400">
                     focuses
@@ -302,10 +311,11 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   className="pl-6"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 2.0, duration: 0.3 }}
+                  variants={{
+                    hidden: { opacity: 0, x: -10 },
+                    visible: { opacity: 1, x: 0 },
+                  }}
+                  transition={{ duration: 0.3 }}
                 >
                   <span className="text-purple-600 dark:text-purple-400">
                     scope
@@ -321,7 +331,7 @@ export default function Home() {
                   </span>
                   <span className="text-gray-500">;</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>

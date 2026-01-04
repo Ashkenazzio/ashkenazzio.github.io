@@ -3,15 +3,15 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon, Menu } from "lucide-react";
-import { Button } from "../ui/button";
-import { TerminalLogo } from "../ui/terminal-logo";
+import { Button } from "../ui/Button";
+import { TerminalLogo } from "../ui/TerminalLogo";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetClose,
   SheetTitle,
-} from "../ui/sheet";
+} from "../ui/Sheet";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -33,6 +33,8 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+    // Check initial scroll position on mount
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

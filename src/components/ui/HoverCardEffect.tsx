@@ -111,7 +111,7 @@ export function HoverCardEffect({
       onMouseMove={isTouch ? undefined : handleMouseMove}
       onMouseEnter={isTouch ? undefined : handleMouseEnter}
       onMouseLeave={isTouch ? undefined : handleMouseLeave}
-      className={cn("relative h-full", containerClassName)}
+      className={cn("relative h-full rounded-[inherit]", containerClassName)}
       style={{
         transform: showEffects ? "translateY(-5px)" : "translateY(0)",
         boxShadow: showEffects
@@ -123,15 +123,11 @@ export function HoverCardEffect({
     >
       <div
         className={cn(
-          "relative overflow-hidden transition-all duration-300 backdrop-blur-sm h-full",
+          "relative overflow-hidden transition-all duration-300 backdrop-blur-sm h-full shadow-sm dark:shadow-none border border-gray-200/60 dark:border-white/10",
           className
         )}
         style={innerStyle}
       >
-        {/* Base border - always visible */}
-        <div
-          className="absolute inset-0 pointer-events-none rounded-[inherit] border-[2px] border-white/10"
-        />
         {/* Glow effect layer - on desktop only (follows cursor) */}
         {!isTouch && (
           <div
@@ -148,15 +144,16 @@ export function HoverCardEffect({
         <div
           className="absolute pointer-events-none transition-opacity duration-300 rounded-[inherit]"
           style={{
-            inset: 0,
-            border: `2px solid ${effectiveBorderColor}`,
+            inset: -1,
+            border: `3px solid ${effectiveBorderColor}`,
+            boxShadow: `0 0 10px 0 ${effectiveBorderColor}`,
             // On desktop: radial mask following cursor. On touch: full border
             WebkitMaskImage: isTouch
               ? undefined
-              : `radial-gradient(120px 120px at ${mousePosition.x}px ${mousePosition.y}px, white 30%, transparent 65%)`,
+              : `radial-gradient(120px 120px at ${mousePosition.x + 1}px ${mousePosition.y + 1}px, white 30%, transparent 65%)`,
             maskImage: isTouch
               ? undefined
-              : `radial-gradient(120px 120px at ${mousePosition.x}px ${mousePosition.y}px, white 30%, transparent 65%)`,
+              : `radial-gradient(120px 120px at ${mousePosition.x + 1}px ${mousePosition.y + 1}px, white 30%, transparent 65%)`,
             opacity: showEffects ? (isTouch ? 0.6 : 1) : 0,
           }}
         />

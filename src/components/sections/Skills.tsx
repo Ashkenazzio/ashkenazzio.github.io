@@ -9,7 +9,7 @@ import {
   Brain,
   LucideIcon,
 } from "lucide-react";
-import { HoverCardEffect } from "../ui/hover-card-effect";
+import { HoverCardEffect } from "../ui/HoverCardEffect";
 import { motion } from "framer-motion";
 import { createContainerVariants, createItemVariants, createHeadingVariants } from "@/lib/motion-variants";
 
@@ -91,7 +91,7 @@ export default function Skills() {
             <motion.div key={category.title} variants={itemVariants}>
               <HoverCardEffect
                 className="bg-card rounded-lg h-full"
-                containerClassName="h-full"
+                containerClassName="h-full rounded-lg"
               >
                 <div className="p-6 h-full">
                   <div className="flex items-center gap-3 mb-4">
