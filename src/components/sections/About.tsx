@@ -14,11 +14,11 @@ const profileItemVariants = createItemVariants({ x: 20, y: 0, damping: 12 });
 
 export default function About() {
   return (
-    <section id="about" className="py-14 relative bg-background">
+    <section id="about" className="relative bg-background">
       <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-primary/5 to-background -z-10"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-container">
         <motion.h2
-          className="section-heading mb-12"
+          className="section-heading mb-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -27,7 +27,7 @@ export default function About() {
           About Me
         </motion.h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           {/* Content Column */}
           <motion.div
             className="lg:col-span-8 space-y-6"

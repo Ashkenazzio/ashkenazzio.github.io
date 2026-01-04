@@ -67,9 +67,9 @@ export default function Skills() {
           viewport={{ once: true, amount: 0.2 }}
           variants={headingVariants}
         >
-          <h2 className="section-heading mb-12">Skills</h2>
+          <h2 className="section-heading mb-8">Skills</h2>
           <motion.p
-            className="text-muted-foreground mb-12"
+            className="text-muted-foreground mb-8"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}

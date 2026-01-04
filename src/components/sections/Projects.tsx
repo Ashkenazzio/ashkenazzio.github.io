@@ -196,6 +196,8 @@ export default function Projects() {
       setIsAnimating(true);
       setSlideDirection(newDirection);
       setCurrentSlide(newIndex);
+      // Release lock after 200ms instead of waiting for full animation
+      setTimeout(() => setIsAnimating(false), 200);
     }
   };
 
@@ -267,11 +269,11 @@ export default function Projects() {
           viewport={{ once: true, amount: 0.2 }}
           variants={headingVariants}
         >
-          <h2 ref={headingRef} className="section-heading mb-12">
+          <h2 ref={headingRef} className="section-heading mb-8">
             Projects
           </h2>
           <motion.p
-            className="text-muted-foreground mb-12"
+            className="text-muted-foreground mb-8"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -337,7 +339,6 @@ export default function Projects() {
                   dragConstraints={{ left: 0, right: 0 }}
                   dragElastic={0.2}
                   onDragEnd={handleDragEnd}
-                  onAnimationComplete={() => setIsAnimating(false)}
                   className="absolute inset-0 cursor-grab active:cursor-grabbing"
                   style={{ transformStyle: 'preserve-3d' }}
                 >

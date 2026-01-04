@@ -51,7 +51,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="section-container flex flex-col lg:flex-row items-center justify-between gap-10">
+      <div className="section-container-x py-12 sm:py-0 flex flex-col lg:flex-row items-center justify-between gap-10">
         <div className="flex flex-col max-w-xl text-center lg:text-left">
           <motion.span
             className="text-sm md:text-base font-medium text-primary opacity-90 mb-2"

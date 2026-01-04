@@ -101,7 +101,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="bg-background">
+    <section id="contact" className="bg-background pb-8 sm:pb-12">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -109,9 +109,9 @@ export default function Contact() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
         >
-          <h2 className="section-heading mb-12">Get In Touch</h2>
+          <h2 className="section-heading mb-8">Get In Touch</h2>
           <motion.p
-            className="text-muted-foreground mb-12"
+            className="text-muted-foreground mb-8"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
