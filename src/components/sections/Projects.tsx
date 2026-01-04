@@ -340,7 +340,6 @@ export default function Projects() {
                               key={`slide-img-${currentSlide}`}
                               {...getImageSrcSet(project.image)}
                               alt={project.title}
-                              loading="lazy"
                               className={`w-full h-48 object-cover ${shouldAnimate ? 'animate-blur-in' : ''}`}
                               onAnimationEnd={() => {
                                 if (shouldAnimate) {
@@ -527,7 +526,6 @@ export default function Projects() {
                             <motion.img
                               {...getImageSrcSet(project.image)}
                               alt={project.title}
-                              loading="lazy"
                               className={`w-full h-48 object-cover${isExtraProject && isClosing ? ' animate-blur-out' : ''}`}
                               style={
                                 isExtraProject && isClosing

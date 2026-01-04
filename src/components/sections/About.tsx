@@ -136,7 +136,6 @@ export default function About() {
                 <img
                   className="aspect-square h-full w-full"
                   alt="Omri Ashkenazi"
-                  loading="lazy"
                   src="/Omri-bw-320w.webp"
                   srcSet="/Omri-bw-160w.webp 160w, /Omri-bw-320w.webp 320w, /Omri-bw.webp 600w"
                   sizes="160px"
