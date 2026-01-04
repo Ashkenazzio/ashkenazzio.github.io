@@ -14,8 +14,8 @@ export default function About() {
           className="section-heading mb-8"
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-15%" }}
-          transition={{ type: "spring", stiffness: 100, damping: 15 }}
+          viewport={{ once: true, margin: '-15%' }}
+          transition={{ type: 'spring', stiffness: 100, damping: 15 }}
         >
           About Me
         </motion.h2>
@@ -26,8 +26,8 @@ export default function About() {
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ type: "spring", stiffness: 100, damping: 15 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ type: 'spring', stiffness: 100, damping: 15 }}
             >
               <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-primary" />
@@ -46,8 +46,13 @@ export default function About() {
               <motion.div
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 15,
+                  delay: 0.1,
+                }}
               >
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
@@ -81,8 +86,13 @@ export default function About() {
               <motion.div
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.2 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 15,
+                  delay: 0.2,
+                }}
               >
                 <HoverCardEffect
                   className="bg-card rounded-lg h-full"
@@ -95,7 +105,7 @@ export default function About() {
                     </h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="font-medium">Full Stack Web Developer</p>
+                        <p className="font-medium">Full Stack Engineer</p>
                         <p className="text-sm text-muted-foreground">
                           Zoom REI
                         </p>
@@ -126,8 +136,8 @@ export default function About() {
               className="relative"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ type: "spring", stiffness: 100, damping: 12 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ type: 'spring', stiffness: 100, damping: 12 }}
             >
               <span
                 data-touch-hover
@@ -147,13 +157,16 @@ export default function About() {
               className="text-center lg:text-left"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ type: "spring", stiffness: 100, damping: 12, delay: 0.1 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{
+                type: 'spring',
+                stiffness: 100,
+                damping: 12,
+                delay: 0.1,
+              }}
             >
               <h3 className="text-2xl font-bold">Omri Ashkenazi</h3>
-              <p className="text-muted-foreground">
-                Full-Stack & AI Engineer
-              </p>
+              <p className="text-muted-foreground">Full-Stack & AI Engineer</p>
             </motion.div>
 
             {/* Tags */}
@@ -161,8 +174,13 @@ export default function About() {
               className="flex flex-wrap gap-2 justify-center lg:justify-start"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ type: "spring", stiffness: 100, damping: 12, delay: 0.2 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{
+                type: 'spring',
+                stiffness: 100,
+                damping: 12,
+                delay: 0.2,
+              }}
             >
               {['Full Stack', 'AI/ML', 'Next.js', 'Docker'].map(skill => (
                 <span key={skill} data-touch-hover className="about-tag">
@@ -175,8 +193,13 @@ export default function About() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ type: "spring", stiffness: 100, damping: 12, delay: 0.3 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{
+                type: 'spring',
+                stiffness: 100,
+                damping: 12,
+                delay: 0.3,
+              }}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.92 }}
             >
