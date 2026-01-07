@@ -30,7 +30,7 @@ const smoothScrollTo = (
       const progress = Math.min(elapsed / duration, 1);
       const easedProgress = easeOutQuint(progress);
 
-      window.scrollTo(0, startY + distance * easedProgress);
+      window.scrollTo({ top: startY + distance * easedProgress, behavior: 'instant' });
 
       if (progress < 1) {
         requestAnimationFrame(animateScroll);
